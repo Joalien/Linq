@@ -12,7 +12,7 @@ public class Controller {
     @RequestMapping("/")
     public ResponseEntity<?> createOrder() {
         try {
-            return new ResponseEntity<>("Success\n", HttpStatus.CREATED);
+            return new ResponseEntity<>("Test production\n", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Error\n", HttpStatus.BAD_REQUEST);
         }
