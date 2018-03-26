@@ -1,12 +1,12 @@
-package org.hyperlinux.Lynx;
+package org.hyperlinux.Linq;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LynxApplication {
+public class LinqApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LynxApplication.class, args);
+		SpringApplication.run(LinqApplication.class, args);
 	}
 }
