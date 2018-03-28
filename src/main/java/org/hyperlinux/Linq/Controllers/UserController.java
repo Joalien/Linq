@@ -5,15 +5,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @RestController
 public class UserController {
 
-    private static Set<User> users = new HashSet<User>();
+    private static Set<User> users = new LinkedHashSet<User>();
 
     //Get all users to the list
+    @CrossOrigin
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<?> getAllUsers() {
         try {
@@ -24,6 +25,7 @@ public class UserController {
     }
 
     //Post a user to the list
+    @CrossOrigin
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity<?> addUser(@RequestBody User user) {
         try {
@@ -35,6 +37,7 @@ public class UserController {
     }
 
     //Update an user
+    @CrossOrigin
     @RequestMapping(value = "/{pseudo}", method = RequestMethod.PUT)
     public ResponseEntity<?> addUser(@PathVariable("pseudo") String pseudo, @RequestBody User user) {
         try {
@@ -46,6 +49,7 @@ public class UserController {
     }
 
     //Remove a user to the list
+    @CrossOrigin
     @RequestMapping(value = "/{pseudo}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(@PathVariable("pseudo") String pseudo) {
         try {
@@ -56,6 +60,7 @@ public class UserController {
         }
     }
 
+    //Find the user who has the given pseudo
     private User getUserByPseudo(String pseudo){
         for(User u : users){
             if(u.getPseudo().equals(pseudo)) return u;

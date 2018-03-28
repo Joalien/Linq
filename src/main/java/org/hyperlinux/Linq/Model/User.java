@@ -34,9 +34,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "pseudo='" + pseudo + '\'' +
-                ", ready=" + ready +
-                '}';
+        return "{\"pseudo\":\"" + pseudo + "\"" +
+                ", \"ready\":\"" + ready + "\"}";
     }
 }
