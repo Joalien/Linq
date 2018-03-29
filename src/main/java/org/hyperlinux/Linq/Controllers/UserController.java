@@ -12,10 +12,11 @@ import java.util.Set;
 public class UserController {
 
     private static Set<User> users = new LinkedHashSet<User>();
+    private static int max_id = 0;
 
     //Get all users to the list
     @CrossOrigin
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/linq", method = RequestMethod.GET)
     public ResponseEntity<?> getAllUsers() {
         try {
             return new ResponseEntity<>(users.toString(), HttpStatus.CREATED);
@@ -26,9 +27,10 @@ public class UserController {
 
     //Post a user to the list
     @CrossOrigin
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/linq", method = RequestMethod.POST)
     public ResponseEntity<?> addUser(@RequestBody User user) {
         try {
+            user.setId(++max_id);
             users.add(user);
             return new ResponseEntity<>(users.toString(), HttpStatus.CREATED);
         } catch (Exception e) {
@@ -38,10 +40,10 @@ public class UserController {
 
     //Update an user
     @CrossOrigin
-    @RequestMapping(value = "/{pseudo}", method = RequestMethod.PUT)
-    public ResponseEntity<?> addUser(@PathVariable("pseudo") String pseudo, @RequestBody User user) {
+    @RequestMapping(value = "/linq/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> addUser(@PathVariable("id") int id, @RequestBody User user) {
         try {
-            if(users.remove(getUserByPseudo(pseudo))) users.add(user);
+            if(users.remove(getUserById(id))) users.add(user);
             return new ResponseEntity<>(users.toString(), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -50,20 +52,20 @@ public class UserController {
 
     //Remove a user to the list
     @CrossOrigin
-    @RequestMapping(value = "/{pseudo}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteUser(@PathVariable("pseudo") String pseudo) {
+    @RequestMapping(value = "/linq/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteUser(@PathVariable("id") int id) {
         try {
-            users.remove(getUserByPseudo(pseudo));
+            users.remove(getUserById(id));
             return new ResponseEntity<>(users.toString(), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    //Find the user who has the given pseudo
-    private User getUserByPseudo(String pseudo){
+    //Find the user who has the given id
+    private User getUserById(int id){
         for(User u : users){
-            if(u.getPseudo().equals(pseudo)) return u;
+            if(u.getId()==id) return u;
         }
         return null;
     }
